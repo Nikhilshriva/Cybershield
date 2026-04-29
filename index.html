@@ -7,52 +7,115 @@
 <title>CyberShield</title>
 
 <style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#0a0a0a;
-  color:white;
+:root{
+  --accent:#00ff88;
+  --bg:#0a0a0a;
 }
 
+body{
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background:var(--bg);
+  color:white;
+  overflow-x:hidden;
+}
+
+/* LOADER */
+#loader{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  font-size:20px;
+}
+
+/* HERO */
 .hero{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
   text-align:center;
-  padding:80px 20px;
+  background: radial-gradient(circle, #00ff8820, transparent);
 }
 
 h1{
-  font-size:2rem;
+  font-size:2.5rem;
 }
 
-.accent{
-  color:#00ff88;
-}
+.accent{color:var(--accent);}
 
+/* BUTTON */
 .btn{
-  background:#00ff88;
-  color:black;
-  padding:12px 20px;
+  background:var(--accent);
+  padding:14px 28px;
   border:none;
-  border-radius:8px;
+  border-radius:12px;
   margin-top:20px;
+  font-weight:bold;
 }
 
+/* GLASS */
+.card{
+  background:rgba(255,255,255,0.05);
+  padding:25px;
+  margin:15px;
+  border-radius:16px;
+  backdrop-filter: blur(12px);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform: translateY(-10px);
+  box-shadow:0 0 25px #00ff8840;
+}
+
+/* GRID */
+.grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+/* SECTION */
 .section{
-  padding:40px 20px;
+  padding:60px 20px;
   text-align:center;
 }
 
-.card{
-  background:rgba(255,255,255,0.05);
-  margin:15px;
-  padding:20px;
-  border-radius:10px;
+/* PARTICLES */
+canvas{
+  position:fixed;
+  z-index:-1;
 }
 
-input, select{
-  padding:10px;
-  margin:10px;
-  border-radius:6px;
-  border:none;
+/* TOGGLE */
+.toggle{
+  position:fixed;
+  top:20px;
+  right:20px;
+  cursor:pointer;
+}
+
+/* CHAT */
+.chat{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:var(--accent);
+  padding:15px;
+  border-radius:50%;
+}
+
+/* COUNTER */
+.big{
+  font-size:2rem;
+  color:var(--accent);
 }
 </style>
 
@@ -60,79 +123,135 @@ input, select{
 
 <body>
 
+<div id="loader">🔐 Securing...</div>
+
+<canvas id="bg"></canvas>
+
+<div class="toggle" onclick="toggleMode()">🌗</div>
+
 <!-- HERO -->
 
 <div class="hero">
-  <h1>Enterprise-Grade Security</h1>
-  <p class="accent">Starting at ₹4999/month</p>
+  <h1>Enterprise Security <span class="accent">Reimagined</span></h1>
+  <p>Starting ₹4999/month</p>
   <button class="btn">Get Started</button>
 </div>
 
-<!-- TRUST -->
+<!-- PROBLEM -->
 
 <div class="section">
-  <p>Trusted by 500+ SMBs</p>
+  <h2 class="accent">Problems We Solve</h2>
+  <div class="grid">
+    <div class="card">Cyber attacks increasing</div>
+    <div class="card">No real-time monitoring</div>
+    <div class="card">Compliance issues</div>
+  </div>
 </div>
 
-<!-- SERVICES -->
+<!-- SOLUTION -->
 
 <div class="section">
-  <h2 class="accent">Services</h2>
-  <div class="card">24/7 Threat Monitoring</div>
-  <div class="card">Phishing Protection</div>
-  <div class="card">Ransomware Defense</div>
-  <div class="card">Compliance (GDPR / ISO)</div>
+  <h2 class="accent">Our Solution</h2>
+  <div class="card">AI-powered security + 24/7 monitoring</div>
 </div>
 
-<!-- CALCULATOR -->
+<!-- FEATURES -->
 
 <div class="section">
-  <h2 class="accent">Security Score</h2>
+  <h2 class="accent">Features</h2>
+  <div class="grid">
+    <div class="card">Threat Detection</div>
+    <div class="card">Phishing Protection</div>
+    <div class="card">Ransomware Defense</div>
+  </div>
+</div>
 
-  <input type="number" id="emp" placeholder="Employees">
-  <select id="risk">
-    <option value="1">Low Risk</option>
-    <option value="2">Medium Risk</option>
-    <option value="3">High Risk</option>
-  </select>
+<!-- HOW IT WORKS -->
 
-  <br>
-  <button class="btn" onclick="calc()">Check Risk</button>
+<div class="section">
+  <h2 class="accent">How It Works</h2>
+  <div class="grid">
+    <div class="card">1. Connect</div>
+    <div class="card">2. Scan</div>
+    <div class="card">3. Protect</div>
+  </div>
+</div>
 
-  <h3 id="result"></h3>
+<!-- STATS -->
+
+<div class="section">
+  <h2 class="accent">Our Impact</h2>
+  <div class="big" id="count">0</div>
+  <p>Threats Blocked</p>
 </div>
 
 <!-- PRICING -->
 
 <div class="section">
   <h2 class="accent">Pricing</h2>
-
-  <div class="card">SMB - ₹4999/month</div>
-  <div class="card">Business - ₹9999/month</div>
-  <div class="card">Enterprise - Custom</div>
+  <div class="grid">
+    <div class="card">₹4999/month</div>
+    <div class="card">₹9999/month</div>
+    <div class="card">Custom</div>
+  </div>
 </div>
 
 <!-- TESTIMONIAL -->
 
 <div class="section">
-  <h2 class="accent">Testimonials</h2>
-  <div class="card">"CyberShield saved our business!"</div>
+  <div class="card">"Best cybersecurity service!"</div>
 </div>
 
 <!-- FOOTER -->
 
 <div class="section">
-  <p>© 2026 CyberShield | Contact | Blog | Legal</p>
+  <p>© CyberShield</p>
 </div>
 
-<script>
-function calc(){
-  let emp = document.getElementById("emp").value;
-  let risk = document.getElementById("risk").value;
+<div class="chat">💬</div>
 
-  let score = Math.min(100, emp * risk * 1.5);
-  document.getElementById("result").innerText = "Risk Score: " + Math.floor(score) + "%";
+<script>
+// LOADER
+setTimeout(()=>{document.getElementById("loader").style.display="none"},1500);
+
+// DARK MODE
+function toggleMode(){
+  document.body.style.background =
+  document.body.style.background=="white"?"#0a0a0a":"white";
 }
+
+// COUNTER
+let c=0;
+let interval=setInterval(()=>{
+  c+=50;
+  document.getElementById("count").innerText=c+"+";
+  if(c>=10000) clearInterval(interval);
+},30);
+
+// PARTICLES
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<80;i++){
+  particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height});
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="#00ff88";
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,2,0,Math.PI*2);
+    ctx.fill();
+    p.y+=0.3;
+    if(p.y>canvas.height) p.y=0;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
 </script>
 
 </body>
